@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import TodoItem from "./TodoItem";
+import commentCall from "./chat";
 
 let nextId = 0;
 
@@ -11,28 +12,14 @@ export default function List() {
   const [date, setDate] = useState("");
   const [todos, setTodos] = useState([]);
   const [isDue, setIsDue] = useState(Boolean);
+  const [chatComm, setChatComm] = useState("");
 
   let dueDate = new Date(date);
 
-  let dateCompare = () => {
-    if (todayDate.getTime() >= dueDate.getTime()) {
-      setIsDue(true);
-    } else {
-      setIsDue(false);
-    }
-  };
-
-  // let successMessage = () => {
-  //   return (
-  //     <div class="alert alert-primary" role="alert">
-  //       A simple primary alert—check it out!
-  //     </div>
-  //   );
-  // };
   let dangerMessage = () => {
     return (
-      <div class="alert alert-danger" role="alert">
-        Get your shit together!
+      <div className="alert alert-danger" role="alert">
+        {chatComm}
       </div>
     );
   };
@@ -41,10 +28,10 @@ export default function List() {
     <>
       <h1>Todo Items:</h1>
 
-      <div class="input-group mb-3">
+      <div className="input-group mb-3">
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           aria-label="Walk the duck"
           aria-describedby="new-submit-button"
           id="new-todo"
@@ -66,15 +53,28 @@ export default function List() {
           onClick={() => {
             setTodos([
               ...todos,
-              { id: nextId++, name: title, date: date, isDue: isDue },
+              {
+                id: nextId++,
+                name: title,
+                date: date,
+                isDue: isDue,
+                chatComm: chatComm,
+              },
             ]);
-            setIsDue(() => {
-              if (todayDate.getTime() >= dueDate.getTime()) {
-                return true;
-              } else {
-                return false;
-              }
-            });
+            setIsDue(
+              () => {
+                if (todayDate.getTime() >= dueDate.getTime()) {
+                  return true;
+                } else {
+                  return false;
+                }
+              },
+              setChatComm(() => {
+                if (isDue) {
+                  return commentCall();
+                }
+              })
+            );
           }}
         >
           Add
@@ -87,7 +87,7 @@ export default function List() {
             key={todo.id}
             title={todo.name}
             date={todo.date}
-            message={todo.isDue ? "" : dangerMessage()}
+            message={todo.isDue ? null : dangerMessage()}
           />
         ))}
       </ul>
