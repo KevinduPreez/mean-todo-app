@@ -30,6 +30,7 @@
 
 ul {
   list-style: none;
+  padding: 0px !important;
 }
 
 @keyframes App-logo-spin {
