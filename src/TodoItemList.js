@@ -6,20 +6,21 @@ import commentCall from "./chat";
 let nextId = 0;
 
 let todayDate = new Date();
+let initialMessage = commentCall();
 
 export default function List() {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
-  const [todos, setTodos] = useState([]);
   const [isDue, setIsDue] = useState(Boolean);
   const [chatComm, setChatComm] = useState("");
+  const [todos, setTodos] = useState([]);
 
   let dueDate = new Date(date);
 
   let dangerMessage = () => {
     return (
       <div className="alert alert-danger" role="alert">
-        {chatComm}
+        {chatComm ? "" : initialMessage}
       </div>
     );
   };
@@ -43,7 +44,18 @@ export default function List() {
           id="new-todo-date"
           type="date"
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => {
+            setDate(e.target.value);
+            setIsDue(() => {
+              let t1 = todayDate.getTime();
+              let t2 = new Date(e.target.value);
+              if (t1 <= t2.getTime()) {
+                return true;
+              } else {
+                return false;
+              }
+            });
+          }}
         />
 
         <button
@@ -61,20 +73,6 @@ export default function List() {
                 chatComm: chatComm,
               },
             ]);
-            setIsDue(
-              () => {
-                if (todayDate.getTime() >= dueDate.getTime()) {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
-              setChatComm(() => {
-                if (isDue) {
-                  return commentCall();
-                }
-              })
-            );
           }}
         >
           Add
@@ -87,7 +85,7 @@ export default function List() {
             key={todo.id}
             title={todo.name}
             date={todo.date}
-            message={todo.isDue ? null : dangerMessage()}
+            message={todo.isDue ? "" : dangerMessage()}
           />
         ))}
       </ul>
