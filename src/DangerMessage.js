@@ -2,6 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { chatGptCaller } from "./chat";
 
+export function gptMessage() {
+  //TODO get message from chatGPT and return a div with said message.
+}
+
 export default function DangerMessage({ mess }) {
   const [chatComm, setChatComm] = useState("");
 
