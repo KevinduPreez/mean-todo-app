@@ -2,19 +2,17 @@
 import { Configuration, OpenAIApi } from "openai";
 
 const chatConfig = new Configuration({
-  apiKey: "",
+  apiKey: "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",
 });
-
 const openai = new OpenAIApi(chatConfig);
-const chatResponse = await openai.createCompletion({
-  model: "text-ada-001",
-  prompt: "Write a sarcastic comment about my failures",
-  temperature: 0.3,
-  max_tokens: 36,
-});
 
-export default function ChatResponse() {
-  //   console.log(chatResponse.data.choices[0].text);
-  const chatFailed = chatResponse.data.choices[0].text;
-  return chatFailed;
+export async function chatGptCaller() {
+  const chatResponse = await openai.createCompletion({
+    model: "text-ada-001",
+    prompt: "Write a sarcastic comment about my failures",
+    temperature: 0.3,
+    max_tokens: 36,
+  });
+  //console.log(chatResponse.data.choices[0].text);
+  return chatResponse.data.choices[0].text;
 }
