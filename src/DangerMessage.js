@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { chatGptCaller } from "./chat";
 
 export function gptMessage() {
-  return <div>Working</div>;
+  return <div>Working 123</div>;
 }
 
 export default function DangerMessage({ mess }) {
