@@ -1,27 +1,44 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { chatGptCaller } from "./chat";
+import { useTodosDispatchContext } from "./TodoContext";
 
-export function gptMessage() {
-  return <div>Working 123</div>;
-}
+export default function GptMessage() {
+  const [ms, setMs] = useState("");
 
-export default function DangerMessage({ mess }) {
-  const [chatComm, setChatComm] = useState("");
+  const gptMess = chatGptCaller();
+
+  const dispatch = useTodosDispatchContext();
 
   useEffect(() => {
-    chatGptCaller()
-      .then((data) => {
-        setChatComm(data);
-      })
-      .catch((error) => {
-        console.error("Chat failed: ", error);
-      });
+    gptMess.then((data) => {
+      setMs(data);
+    });
   }, []);
 
   return (
     <div className="alert alert-danger" role="alert">
-      {mess}
+      {ms}
     </div>
   );
 }
+
+// export default function DangerMessage({ mess }) {
+//   const [chatComm, setChatComm] = useState("");
+
+//   useEffect(() => {
+//     chatGptCaller()
+//       .then((data) => {
+//         setChatComm(data);
+//       })
+//       .catch((error) => {
+//         console.error("Chat failed: ", error);
+//       });
+//   }, []);
+
+//   return (
+//     <div className="alert alert-danger" role="alert">
+//       {mess}
+//     </div>
+//   );
+// }

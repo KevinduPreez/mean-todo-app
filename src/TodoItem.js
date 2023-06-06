@@ -1,5 +1,5 @@
 import React from "react";
-import { gptMessage } from "./DangerMessage";
+import GptMessage from "./DangerMessage";
 
 export default function TodoItem({ isDue, title, date, message }) {
   return (
@@ -10,7 +10,7 @@ export default function TodoItem({ isDue, title, date, message }) {
 
         {message}
 
-        {isDue ? <></> : gptMessage()}
+        {isDue ? <></> : GptMessage()}
 
         <a href="/" className="card-link">
           <button className="btn btn-success">Completed</button>
