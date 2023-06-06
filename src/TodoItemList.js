@@ -7,11 +7,11 @@ export default function TodoItemList() {
 
   return (
     <>
-      <h1>Todo Items:</h1>
+      <h2>Todo Items:</h2>
 
-      <ul>
+      <ul className="d-flex flex-wrap ">
         {todos.map((todo) => (
-          <li key={todo.id}>
+          <li key={todo.id} className="w-25 p-3">
             <TodoItem
               title={todo.title}
               date={todo.date}

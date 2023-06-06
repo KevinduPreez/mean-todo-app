@@ -14,7 +14,7 @@ export default function TodoItemNew() {
   const dispatch = useTodosDispatchContext();
 
   return (
-    <div className="input-group mb-3">
+    <div className="input-group mb-3 w-50 mt-4 mb-4">
       <input
         type="text"
         className="form-control"
