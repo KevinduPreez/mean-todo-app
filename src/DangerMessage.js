@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { chatGptCaller } from "./chat";
 
 export function gptMessage() {
-  //TODO get message from chatGPT and return a div with said message.
+  return <div>Working</div>;
 }
 
 export default function DangerMessage({ mess }) {
