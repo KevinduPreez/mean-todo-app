@@ -1,28 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import GptMessage from "./DangerMessage";
+import { useTodosDispatchContext } from "./TodoContext";
 
-export default function TodoItem({ isDue, title, date, message }) {
+export default function TodoItem({ todo }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useTodosDispatchContext();
+
+  let taskContent;
+
+  if (isEditing) {
+    taskContent = (
+      <>
+        <input
+          type="text"
+          className="form-control"
+          defaultValue={todo.title}
+          onChange={(e) => {
+            dispatch({
+              type: "changed",
+              todo: {
+                ...todo,
+                title: e.target.value,
+              },
+            });
+          }}
+        />
+        <div class="btn-group" role="group" aria-label="simple buttons">
+          <button
+            className="btn btn-success my-3"
+            onClick={() => {
+              setIsEditing(false);
+            }}
+          >
+            Save
+          </button>
+          <button
+            className="btn btn-warning my-3"
+            onClick={() => {
+              setIsEditing(false);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </>
+    );
+  }
+
   return (
-    <div className="card">
-      <div className="card-body">
-        <a href="/" className="card-link">
+    <div className="row">
+      <p>Todo #{todo.id + 1}</p>
+      <hr />
+      <div class="d-flex w-100 justify-content-between">
+        <h4 class="mb-1">{todo.title}</h4>
+      </div>
+      {taskContent}
+      {todo.isDue ? <></> : GptMessage()}
+      <small>Due: {todo.date}</small>
+
+      <div class="btn-group my-3" role="group" aria-label="simple buttons">
+        <button className="btn btn-success">Completed</button>
+        <button
+          className="btn btn-info"
+          onClick={() => {
+            setIsEditing(true);
+          }}
+        >
           Edit
-        </a>
-
-        <h5 className="card-title">{title}</h5>
-        <h6 className="card-subtitle mb-1 text-body-secondary">{date}</h6>
-
-        {message}
-
-        {isDue ? <></> : GptMessage()}
-
-        <a href="/" className="card-link">
-          <button className="btn btn-success">Completed</button>
-        </a>
-
-        <a href="/" className="card-link">
-          <button className="btn btn-danger">Delete</button>
-        </a>
+        </button>
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            console.log(todo.id);
+            dispatch({
+              type: "deleted",
+              id: todo.id,
+            });
+          }}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

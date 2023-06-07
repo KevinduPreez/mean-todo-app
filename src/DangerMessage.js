@@ -17,7 +17,7 @@ export default function GptMessage() {
   }, []);
 
   return (
-    <div className="alert alert-danger" role="alert">
+    <div className="alert alert-danger text-center" role="alert">
       {ms}
     </div>
   );

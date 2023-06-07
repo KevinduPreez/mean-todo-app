@@ -4,23 +4,31 @@ import { useTodosContext } from "./TodoContext";
 
 export default function TodoItemList() {
   const todos = useTodosContext();
+  const screenWidth = window.innerWidth;
 
-  return (
-    <>
-      <h2>Todo Items:</h2>
-
-      <ul className="d-flex flex-wrap ">
-        {todos.map((todo) => (
-          <li key={todo.id} className="w-25 p-3">
-            <TodoItem
-              title={todo.title}
-              date={todo.date}
-              message={todo.chatComm}
-              isDue={todo.isDue}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
-  );
+  if (screenWidth < 400) {
+    return (
+      <>
+        <ul className="list-group">
+          {todos.map((todo) => (
+            <li key={todo.id} className="list-group-item">
+              <TodoItem todo={todo} />
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <ul className="list-group">
+          {todos.map((todo) => (
+            <li key={todo.id} className="list-group-item">
+              <TodoItem todo={todo} />
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  }
 }

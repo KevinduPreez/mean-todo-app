@@ -20,16 +20,35 @@ export function pastDueReducer(gptMessages, action) {
 }
 
 function todosReducer(todos, action) {
-  return [
-    ...todos,
-    {
-      id: action.id,
-      title: action.title,
-      date: action.date,
-      isDue: action.isDue,
-      chatComm: action.chatComm,
-    },
-  ];
+  switch (action.type) {
+    case "added": {
+      return [
+        ...todos,
+        {
+          id: action.id,
+          title: action.title,
+          date: action.date,
+          isDue: action.isDue,
+          chatComm: action.chatComm,
+        },
+      ];
+    }
+    case "deleted": {
+      return todos.filter((t) => t.id !== action.id);
+    }
+    case "changed": {
+      return todos.map((t) => {
+        if (t.id === action.todo.id) {
+          return action.todo;
+        } else {
+          return t;
+        }
+      });
+    }
+    default: {
+      alert("Lol, rip in peaces.");
+    }
+  }
 }
 
 export default function TodoContextProvider({ children }) {
