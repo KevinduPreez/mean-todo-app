@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import GptMessage from "./DangerMessage";
 import { useTodosDispatchContext } from "./TodoContext";
-import GptSuccessMessage from "./CompletedMessage";
+import Particles from "react-particles";
+import { loadFull } from "tsparticles";
 
 export default function TodoItem({ todo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [done, setDone] = useState(false);
   const dispatch = useTodosDispatchContext();
+
+  const particlesInit = useCallback(async (engine) => {
+    console.log(engine);
+    // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
+    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+    // starting from v2 you can add only the features you need reducing the bundle size
+    await loadFull(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(async (container) => {
+    await console.log(container);
+  }, []);
 
   let taskContent;
   let style;
@@ -72,7 +85,6 @@ export default function TodoItem({ todo }) {
           }}
         ></button>
       </div>
-
       <hr />
       <p>Todo #{todo.id + 1}</p>
       {taskContent}
@@ -80,7 +92,6 @@ export default function TodoItem({ todo }) {
         {todo.isDue ? GptMessage() : ""}
       </div>
       <small>Due: {todo.date}</small>
-
       <div
         className={"btn-group " + done ? buttonStyle : "my-3"}
         role="group"
@@ -124,6 +135,135 @@ export default function TodoItem({ todo }) {
           Delete
         </button>
       </div>
+
+      <Particles
+        className={done ? "position-absolute" : "d-none"}
+        id="tsparticles"
+        init={particlesInit}
+        loaded={particlesLoaded}
+        options={{
+          fullScreen: {
+            zIndex: -100,
+          },
+          emitters: {
+            life: {
+              count: 1,
+              duration: 5,
+            },
+            position: {
+              x: 50,
+              y: 100,
+            },
+            rate: {
+              quantity: 5,
+              delay: 0.15,
+            },
+          },
+          particles: {
+            color: {
+              value: ["#1E00FF", "#FF0061", "#E1FF00", "#00FF9E"],
+            },
+            move: {
+              decay: 0.05,
+              direction: "top",
+              enable: true,
+              gravity: {
+                enable: true,
+              },
+              outModes: {
+                top: "none",
+                default: "destroy",
+              },
+              speed: {
+                min: 50,
+                max: 100,
+              },
+            },
+            number: {
+              value: 0,
+            },
+            opacity: {
+              value: 1,
+            },
+            rotate: {
+              value: {
+                min: 0,
+                max: 360,
+              },
+              direction: "random",
+              animation: {
+                enable: true,
+                speed: 30,
+              },
+            },
+            tilt: {
+              direction: "random",
+              enable: true,
+              value: {
+                min: 0,
+                max: 360,
+              },
+              animation: {
+                enable: true,
+                speed: 30,
+              },
+            },
+            size: {
+              value: 3,
+              animation: {
+                enable: true,
+                startValue: "min",
+                count: 1,
+                speed: 16,
+                sync: true,
+              },
+            },
+            roll: {
+              darken: {
+                enable: true,
+                value: 25,
+              },
+              enlighten: {
+                enable: true,
+                value: 25,
+              },
+              enable: true,
+              speed: {
+                min: 5,
+                max: 15,
+              },
+            },
+            wobble: {
+              distance: 30,
+              enable: true,
+              speed: {
+                min: -7,
+                max: 7,
+              },
+            },
+            shape: {
+              type: ["circle", "square"],
+              options: {},
+            },
+          },
+          responsive: [
+            {
+              maxWidth: 1024,
+              options: {
+                particles: {
+                  move: {
+                    speed: {
+                      min: 33,
+                      max: 66,
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          detectRetina: true,
+        }}
+      ></Particles>
     </div>
   );
 }
