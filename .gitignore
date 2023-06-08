@@ -25,6 +25,3 @@ yarn-error.log*
 # enviroment files
 .env
 
-# for now until I setup .env functionality
-./src/chat.js
-/src/chat.js
