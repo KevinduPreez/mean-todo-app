@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import GptMessage from "./DangerMessage";
 import { useTodosDispatchContext } from "./TodoContext";
+import GptSuccessMessage from "./CompletedMessage";
 
 export default function TodoItem({ todo }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [done, setDone] = useState(false);
   const dispatch = useTodosDispatchContext();
 
   let taskContent;
   let meanMessage;
+  let successMessage;
+  let style;
+  let buttonStyle;
 
   if (todo.isDue) {
     meanMessage = GptMessage();
@@ -30,7 +35,7 @@ export default function TodoItem({ todo }) {
             });
           }}
         />
-        <div class="btn-group" role="group" aria-label="simple buttons">
+        <div className="btn-group" role="group" aria-label="simple buttons">
           <button
             className="btn btn-success my-3"
             onClick={() => {
@@ -52,8 +57,13 @@ export default function TodoItem({ todo }) {
     );
   }
 
+  if (done) {
+    style = "alert alert-success";
+    buttonStyle = "d-none";
+  }
+
   return (
-    <div className="row">
+    <div className={"row" + done ? style : ""}>
       <div class="d-flex w-100 justify-content-between">
         <h4 class="mb-1">{todo.title}</h4>
       </div>
@@ -61,11 +71,30 @@ export default function TodoItem({ todo }) {
       <hr />
       <p>Todo #{todo.id + 1}</p>
       {taskContent}
-      {meanMessage}
+      {todo.isCompleted ? successMessage : meanMessage}
       <small>Due: {todo.date}</small>
 
-      <div class="btn-group my-3" role="group" aria-label="simple buttons">
-        <button className="btn btn-success">Completed</button>
+      <div
+        className={"btn-group my-3" + done ? buttonStyle : ""}
+        role="group"
+        aria-label="simple buttons"
+      >
+        <button
+          className="btn btn-success"
+          onClick={() => {
+            setDone(true);
+            dispatch({
+              type: "success",
+              todo: {
+                ...todo,
+                isCompleted: true,
+              },
+            });
+          }}
+        >
+          Completed
+        </button>
+
         <button
           className="btn btn-info"
           onClick={() => {
@@ -74,6 +103,7 @@ export default function TodoItem({ todo }) {
         >
           Edit
         </button>
+
         <button
           className="btn btn-danger"
           onClick={() => {

@@ -10,6 +10,7 @@ export default function TodoItemNew() {
   const [date, setDate] = useState("");
   const [isDue, setIsDue] = useState(Boolean);
   const [chatComm, setChatComm] = useState("");
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const dispatch = useTodosDispatchContext();
 
@@ -78,6 +79,7 @@ export default function TodoItemNew() {
                 title: title,
                 date: date,
                 isDue: isDue,
+                isCompleted: isCompleted,
                 chatComm: chatComm,
               });
             }}
@@ -148,6 +150,7 @@ export default function TodoItemNew() {
                 date: date,
                 isDue: isDue,
                 chatComm: chatComm,
+                isCompleted: isCompleted,
               });
             }}
           >
