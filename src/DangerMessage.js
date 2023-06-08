@@ -17,14 +17,7 @@ export default function GptMessage() {
   }, []);
 
   return (
-    <div className="alert alert-danger text-center" role="alert">
-      {/* {() => {
-        dispatch({
-          chatComm: ms,
-        });
-        //console.log(ms);
-        return ms;
-      }} */}
+    <div className={"alert alert-danger text-center"} role="alert">
       <p>{ms}</p>
     </div>
   );

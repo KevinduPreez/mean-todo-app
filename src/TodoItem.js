@@ -9,14 +9,8 @@ export default function TodoItem({ todo }) {
   const dispatch = useTodosDispatchContext();
 
   let taskContent;
-  let meanMessage;
-  let successMessage;
   let style;
   let buttonStyle;
-
-  if (todo.isDue) {
-    meanMessage = GptMessage();
-  }
 
   if (isEditing) {
     taskContent = (
@@ -64,18 +58,31 @@ export default function TodoItem({ todo }) {
 
   return (
     <div className={"row" + done ? style : ""}>
-      <div class="d-flex w-100 justify-content-between">
-        <h4 class="mb-1">{todo.title}</h4>
+      <div className="d-flex w-100 justify-content-between">
+        <h4 className="mb-1 d-inline">{todo.title}</h4>
+        <button
+          type="button"
+          className={done ? "btn-close d-inline" : "d-none"}
+          aria-label="Close"
+          onClick={() => {
+            dispatch({
+              type: "deleted",
+              id: todo.id,
+            });
+          }}
+        ></button>
       </div>
 
       <hr />
       <p>Todo #{todo.id + 1}</p>
       {taskContent}
-      {todo.isCompleted ? successMessage : meanMessage}
+      <div className={done ? "d-none" : ""}>
+        {todo.isDue ? GptMessage() : ""}
+      </div>
       <small>Due: {todo.date}</small>
 
       <div
-        className={"btn-group my-3" + done ? buttonStyle : ""}
+        className={"btn-group " + done ? buttonStyle : "my-3"}
         role="group"
         aria-label="simple buttons"
       >

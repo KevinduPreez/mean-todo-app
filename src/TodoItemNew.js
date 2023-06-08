@@ -4,6 +4,7 @@ import { TodoDispatchContext, useTodosDispatchContext } from "./TodoContext";
 
 let nextId = 0;
 let todayDate = new Date();
+let inputErrorStyleHandler = "1px solid #ced4da";
 
 export default function TodoItemNew() {
   const [title, setTitle] = useState("");
@@ -20,45 +21,49 @@ export default function TodoItemNew() {
     return (
       <div className="row mb-3 mt-4 mb-4 container-fluid">
         <div className="col">
-          <input
-            type="text"
-            className="form-control"
-            aria-label="Walk the duck"
-            aria-describedby="new-submit-button"
-            id="new-todo"
-            placeholder="Walk the duck"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <form>
+            <input
+              type="text"
+              className="form-control"
+              aria-label="Walk the duck"
+              aria-describedby="new-submit-button"
+              id="new-todo"
+              placeholder="Walk the duck"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
 
-          <input
-            style={{
-              marginRight: "1em",
-              border: "1px solid #ced4da",
-              fontWeight: "400",
-              lineHeight: " 1.5",
-              padding: "0.375rem 0.75rem",
-              borderRadius: "0.375rem",
-            }}
-            className="w-100 my-1"
-            id="new-todo-date"
-            type="date"
-            value={date}
-            onChange={(e) => {
-              setDate(e.target.value);
-              setIsDue(() => {
-                let t1 = todayDate.getTime();
-                let t2 = new Date(e.target.value);
-                if (t2.getTime() > t1) {
-                  //console.log(isDue);
-                  return false;
-                } else {
-                  //console.log(isDue);
-                  return true;
-                }
-              });
-            }}
-          />
+            <input
+              style={{
+                marginRight: "1em",
+                border: inputErrorStyleHandler,
+                fontWeight: "400",
+                lineHeight: " 1.5",
+                padding: "0.375rem 0.75rem",
+                borderRadius: "0.375rem",
+              }}
+              className="w-100 my-1"
+              id="new-todo-date"
+              type="date"
+              value={date}
+              onChange={(e) => {
+                setDate(e.target.value);
+                setIsDue(() => {
+                  let t1 = todayDate.getTime();
+                  let t2 = new Date(e.target.value);
+                  if (t2.getTime() > t1) {
+                    //console.log(isDue);
+                    return false;
+                  } else {
+                    //console.log(isDue);
+                    return true;
+                  }
+                });
+              }}
+              required
+            />
+          </form>
         </div>
 
         <div className="col">
@@ -69,7 +74,7 @@ export default function TodoItemNew() {
               padding: "0.375rem 0.75rem",
               borderRadius: "0.375rem",
             }}
-            type="button"
+            type="submit"
             id="new-submit-button"
             className="btn btn-success w-100 h-100"
             onClick={() => {
