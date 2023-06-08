@@ -18,7 +18,14 @@ export default function GptMessage() {
 
   return (
     <div className="alert alert-danger text-center" role="alert">
-      {ms}
+      {/* {() => {
+        dispatch({
+          chatComm: ms,
+        });
+        //console.log(ms);
+        return ms;
+      }} */}
+      <p>{ms}</p>
     </div>
   );
 }

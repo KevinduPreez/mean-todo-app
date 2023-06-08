@@ -13,8 +13,6 @@ export default function TodoItemNew() {
 
   const dispatch = useTodosDispatchContext();
 
-  const newFormSubmit = () => {};
-
   const screenWidth = window.innerWidth;
 
   if (screenWidth < 400) {
@@ -51,11 +49,11 @@ export default function TodoItemNew() {
                 let t1 = todayDate.getTime();
                 let t2 = new Date(e.target.value);
                 if (t2.getTime() > t1) {
-                  console.log(isDue);
-                  return true;
-                } else {
-                  console.log(isDue);
+                  //console.log(isDue);
                   return false;
+                } else {
+                  //console.log(isDue);
+                  return true;
                 }
               });
             }}
@@ -123,12 +121,11 @@ export default function TodoItemNew() {
               setIsDue(() => {
                 let t1 = todayDate.getTime();
                 let t2 = new Date(e.target.value);
+
                 if (t2.getTime() > t1) {
-                  console.log(isDue);
-                  return true;
-                } else {
-                  console.log(isDue);
                   return false;
+                } else {
+                  return true;
                 }
               });
             }}

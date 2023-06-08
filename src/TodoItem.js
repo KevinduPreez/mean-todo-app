@@ -7,6 +7,11 @@ export default function TodoItem({ todo }) {
   const dispatch = useTodosDispatchContext();
 
   let taskContent;
+  let meanMessage;
+
+  if (todo.isDue) {
+    meanMessage = GptMessage();
+  }
 
   if (isEditing) {
     taskContent = (
@@ -49,13 +54,14 @@ export default function TodoItem({ todo }) {
 
   return (
     <div className="row">
-      <p>Todo #{todo.id + 1}</p>
-      <hr />
       <div class="d-flex w-100 justify-content-between">
         <h4 class="mb-1">{todo.title}</h4>
       </div>
+
+      <hr />
+      <p>Todo #{todo.id + 1}</p>
       {taskContent}
-      {todo.isDue ? <></> : GptMessage()}
+      {meanMessage}
       <small>Due: {todo.date}</small>
 
       <div class="btn-group my-3" role="group" aria-label="simple buttons">
@@ -71,7 +77,7 @@ export default function TodoItem({ todo }) {
         <button
           className="btn btn-danger"
           onClick={() => {
-            console.log(todo.id);
+            //console.log(todo.id);
             dispatch({
               type: "deleted",
               id: todo.id,
