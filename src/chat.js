@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 const chatConfig = new Configuration({
   //TODO: Setup DONEV enviroment for storing key.
-  apiKey: "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",
+  apiKey: "[YOUR API KEY HERE UNTIL I WORK OUT HOW TO GET DOTENV WORKING]",
 });
 const openai = new OpenAIApi(chatConfig);
 
