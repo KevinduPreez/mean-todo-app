@@ -22,17 +22,6 @@ export function pastDueReducer(gptMessages, action) {
 function todosReducer(todos, action) {
   switch (action.type) {
     case "added": {
-      // console.log([
-      //   ...todos,
-      //   {
-      //     id: action.id,
-      //     title: action.title,
-      //     date: action.date,
-      //     isDue: action.isDue,
-      //     chatComm: action.chatComm,
-      //   },
-      // ]);
-
       return [
         ...todos,
         {

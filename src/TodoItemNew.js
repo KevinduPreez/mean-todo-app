@@ -1,6 +1,6 @@
 import React from "react";
-import { useState, useContext } from "react";
-import { TodoDispatchContext, useTodosDispatchContext } from "./TodoContext";
+import { useState } from "react";
+import { useTodosDispatchContext } from "./TodoContext";
 
 let nextId = 0;
 let todayDate = new Date();
@@ -53,10 +53,8 @@ export default function TodoItemNew() {
                   let t1 = todayDate.getTime();
                   let t2 = new Date(e.target.value);
                   if (t2.getTime() > t1) {
-                    //console.log(isDue);
                     return false;
                   } else {
-                    //console.log(isDue);
                     return true;
                   }
                 });
